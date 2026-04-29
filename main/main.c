@@ -37,39 +37,47 @@ static void state_controller(void* param);
 
 canvas_t* out_canvas;
 canvas_t canvas1,canvas2;
-sprite_t bckgorund = {
-    .width = 240,
-    .height = 320,
-    .data = cara_fondo_prueba_map
-};
-sprite_t ojo =
+
+const sprite_t sprite_anim[] = 
 {
-    .width = 30,
-    .height = 45,
-    .data = ojo_prueba_map
-};
+    { .width = 240, .height = 320, .data = sprite1_map },
+    { .width = 240, .height = 320, .data = sprite2_map },
+    { .width = 240, .height = 320, .data = sprite3_map },
+    { .width = 240, .height = 320, .data = sprite4_map },
+    { .width = 240, .height = 320, .data = sprite5_map },
+    { .width = 240, .height = 320, .data = sprite6_map },
+    { .width = 240, .height = 320, .data = sprite7_map },
+    { .width = 240, .height = 320, .data = sprite8_map },
+    { .width = 240, .height = 320, .data = sprite9_map }
+    };
 void app_main(void)
 {
     srand(time(NULL));
-    lcd_crtl_canvas_init(&canvas1,cara_fondo_prueba_map,240,320);
-    lcd_crtl_canvas_init(&canvas2,cara_fondo_prueba_map,240,320);
+    xTaskCreatePinnedToCore(display_controller,"Display_Controller",4098,NULL,2,&display_controller_handle,1);
+
+}
+
+static void display_controller(void* param)
+{
+    lcd_crtl_canvas_init(&canvas1,sprite1_map,240,320);
+    lcd_crtl_canvas_init(&canvas2,sprite1_map,240,320);
     out_canvas = &canvas1;
     lcd_crtl_display_init();
     vTaskDelay(pdMS_TO_TICKS(500));
     
-    //xTaskCreatePinnedToCore(display_controller,"Display_Controller",4098,NULL,2,&display_controller_handle,1);
+    
+    TickType_t xLastTimeWake;
+    xLastTimeWake = xTaskGetTickCount(); 
+    const TickType_t freq = pdMS_TO_TICKS(120);
+    int cont = 0;
 	for(;;)
     {
-        int minx = 0, maxx = 210;
-        int aleatoriox = (rand() % (maxx - minx + 1)) + minx;
-
-        int miny = 0, maxy = 320-45;
-        int aleatorioy = (rand() % (maxy - miny + 1)) + miny;
-        lcd_crtl_canvas_clean(out_canvas,0xFFFF);
-        lcd_crtl_draw_sprite(out_canvas,&bckgorund,(uint16_t)0,(uint16_t)0);
-        lcd_crtl_draw_sprite(out_canvas,&ojo,(uint16_t)aleatoriox,(uint16_t)aleatorioy);
+        /* AQUI VA LO QUE QUIERES DIBUJAR */
+        lcd_crtl_draw_sprite(out_canvas,&sprite_anim[cont % 9],(uint16_t)0,(uint16_t)0);
+        /* FUNCION DE ESCRITURA */
         lcd_crtl_canvas_send(out_canvas);
-        //buffer swap
+        cont ++;
+        /* BUFFER SWAP */
         if (out_canvas == &canvas1)
         {
             out_canvas = &canvas2;
@@ -78,13 +86,7 @@ void app_main(void)
         {
             out_canvas = &canvas1;
         }
+        /* DELAY PARA TENER FPS ESTABLES */
+        xTaskDelayUntil(&xLastTimeWake,freq);
     }
-}
-
-static void display_controller(void* param)
-{
-    while (1)
-	{
-		vTaskDelay(1000/portTICK_PERIOD_MS);
-	}
 }
