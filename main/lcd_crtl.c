@@ -34,10 +34,11 @@
 #include "freertos/task.h"
 #include "freertos/semphr.h"
 #include "lcd_crtl.h"
-
+#include "HD44780.h"
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
+// MACROS LDR RGB
 #define LCD_HOST SPI2_HOST
 
 #define CS_PIN   GPIO_NUM_7
@@ -54,6 +55,11 @@
 
 #define LCD_H_RES 240
 #define LCD_V_RES 320
+
+//MACROS LCD 16x2
+#define LCD_ADDR 0x27
+#define SDA_PIN GPIO_NUM_21
+#define SCL_PIN GPIO_NUM_20
 /* Private variables ---------------------------------------------------------*/
 static esp_lcd_panel_io_handle_t io_handle = NULL;
 static esp_lcd_panel_handle_t panel_handle = NULL;
@@ -64,7 +70,11 @@ static bool IRAM_ATTR notify_transfer_done(esp_lcd_panel_io_handle_t panel_io, e
 
 void lcd_crtl_display_init(void)
 {
+    /* INICIALIZACION DE PANTALLA LCD 16x2 */
 
+    LCD_init(LCD_ADDR,SDA_PIN,SCL_PIN,16,2);
+    LCD_clearScreen();
+    /* INICIALIZACION DE PANTALLA LCD RBG */
     dma_sem = xSemaphoreCreateBinary();
     xSemaphoreGive(dma_sem);
     
