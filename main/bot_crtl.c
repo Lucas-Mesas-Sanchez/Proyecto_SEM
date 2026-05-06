@@ -12,6 +12,7 @@
 #include "bot_crtl.h"
 #include "lcd_crtl.h"
 #include "bot_sprites.h"
+#include "bot_crtl.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -34,8 +35,8 @@ static const char* phrases_table[] =
 
 };
 /* Private function prototypes -----------------------------------------------*/
-static const sprite_t* next_srpite(const sprite_t* animation,uint8_t* actual,uint8_t size);
-static void write_phrase(const char* phrase,uint16_t write_speed);
+// static const sprite_t* next_srpite(const sprite_t* animation,uint8_t* actual,uint8_t size);
+// static void write_phrase(const char* phrase,uint16_t write_speed);
 /* Exported functions --------------------------------------------------------*/
 void bot_idle_animation(canvas_t* canvas)
 {
@@ -76,6 +77,18 @@ void bot_moving_anthena_animation(canvas_t* canvas)
 
     bot_animation_is_active = false;
 }
+void bot_dead_eyes_animation(canvas_t* canvas){
+    bot_animation_is_active = true;
+
+    bot_animation_is_active = false;
+}
+void bot_happy_animation(canvas_t* canvas){
+    bot_animation_is_active = true;
+
+    bot_animation_is_active = false;
+}
+
+
 /* Private functions ---------------------------------------------------------*/
 static const sprite_t* next_srpite(const sprite_t* animation,uint8_t* actual,uint8_t size)
 {
