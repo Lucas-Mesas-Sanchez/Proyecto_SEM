@@ -52,19 +52,19 @@ void bot_init(void)
     static uint16_t cdata[] = {0};
     lcd_crtl_canvas_init(&bot_canvas,cdata,240,320);
 }
-void bot_idle_animation(canvas_t* canvas)
+void bot_idle_animation()
 {
     
 }
-void bot_blink_animation(canvas_t* canvas)
+void bot_blink_animation()
 {
    
 }
-void bot_side_watch_animation(canvas_t* canvas)
+void bot_side_watch_animation()
 {
 
 }
-void bot_talking_animation(canvas_t* canvas)
+void bot_talking_animation()
 {
         uint8_t phrase_select = (rand() % NUM_PHRASES);
         const char* phrase = phrases_table[phrase_select];
@@ -78,7 +78,7 @@ void bot_talking_animation(canvas_t* canvas)
             write_phrase(phrase,100);
         //Aqui pones la boca en su posicion original    
 }
-void bot_moving_anthena_animation(canvas_t* canvas)
+void bot_moving_anthena_animation()
 {
 
 }

@@ -30,11 +30,11 @@
     @brief  Init Function of the display
 */
 void bot_init(void);
-void bot_idle_animation(canvas_t* canvas);
-void bot_blink_animation(canvas_t* canvas);
-void bot_side_watch_animation(canvas_t* canvas);
-void bot_talking_animation(canvas_t* canvas);
-void bot_moving_anthena_animation(canvas_t* canvas);
+void bot_idle_animation();
+void bot_blink_animation();
+void bot_side_watch_animation();
+void bot_talking_animation();
+void bot_moving_anthena_animation();
 #ifdef __cplusplus
 }
 #endif
