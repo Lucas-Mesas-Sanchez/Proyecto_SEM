@@ -73,10 +73,13 @@ void bot_talking_animation()
         write_phrase(phrase,100);
         if (phrase_select == 2) // Caso especial donde una frase se repite. Como no ocurre más veces no merece la pena hacer un enum
         {
-            write_phrase(phrase,100);
             LCD_setCursor(0,1);
+            write_phrase(phrase,250);
+            
         }
-        //Aqui pones la boca en su posicion original    
+        //Aqui pones la boca en su posicion original
+        vTaskDelay(pdMS_TO_TICKS(500));
+        LCD_clearScreen();  
 }
 void bot_moving_anthena_animation()
 {
@@ -89,7 +92,7 @@ void bot_happy_animation()
 }
 void bot_dead_eyes_animation()
 {
-    
+
 }
 /* Private functions ---------------------------------------------------------*/
 static const sprite_t* next_srpite(const sprite_t* animation,uint8_t* actual,uint8_t size)
