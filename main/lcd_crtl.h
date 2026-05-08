@@ -36,6 +36,7 @@ typedef struct
     uint16_t *data;
     uint16_t height;
     uint16_t width;
+    size_t   aligned_size;
 }canvas_t;
 
 /* Exported constants --------------------------------------------------------*/

@@ -30,6 +30,7 @@
 #include "driver/gpio.h"
 #include "esp_vfs_dev.h"
 #include "esp_log.h"
+#include "esp_rom_sys.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/semphr.h"
@@ -49,7 +50,7 @@
 #define LED_PIN  GPIO_NUM_3   // Movido del 38/1 para evitar conflictos
 #define MISO_PIN GPIO_NUM_16  // (O -1 si no lo usas)
 
-#define LCD_PIXEL_CLOCK_HZ 40*1000*1000 //
+#define LCD_PIXEL_CLOCK_HZ 20*1000*1000 //
 #define LCD_CMD_BITS 8
 #define LCD_PARAM_BITS 8
 
@@ -67,7 +68,7 @@ static SemaphoreHandle_t dma_sem = NULL;
 /* Private function prototypes -----------------------------------------------*/
 static bool IRAM_ATTR notify_transfer_done(esp_lcd_panel_io_handle_t panel_io, esp_lcd_panel_io_event_data_t *edata, void *smph);
 /* Exported functions --------------------------------------------------------*/
-
+extern void Cache_WriteBack_Addr(uint32_t addr, uint32_t size);
 void lcd_crtl_display_init(void)
 {
     /* INICIALIZACION DE PANTALLA LCD 16x2 */
@@ -121,7 +122,7 @@ void lcd_crtl_display_init(void)
     vTaskDelay(pdMS_TO_TICKS(120));
 
     ESP_ERROR_CHECK(esp_lcd_panel_init(panel_handle));
-
+    esp_lcd_panel_set_gap(panel_handle, 0, 0);
     ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(panel_handle, true));
     vTaskDelay(pdMS_TO_TICKS(50));
 
@@ -132,10 +133,20 @@ void lcd_crtl_canvas_init(canvas_t* canvas, uint16_t* cdata,uint16_t w,uint16_t 
 {
     canvas->width = w;
     canvas->height = h;
-    
+    size_t raw_size = w * h * sizeof(uint16_t);
+    size_t aligned_size = (raw_size + 63) & ~63;  // ← clave
 
-    canvas->data = (uint16_t *)heap_caps_malloc(w * h * sizeof(uint16_t), MALLOC_CAP_DMA | MALLOC_CAP_INTERNAL); 
-    memcpy(canvas->data,cdata,w * h * sizeof(uint16_t));
+    canvas->data = (uint16_t *)heap_caps_aligned_alloc(64, aligned_size, MALLOC_CAP_SPIRAM);
+    canvas->aligned_size = aligned_size;
+    if (canvas->data == NULL) {
+        ESP_LOGE("LCD", "¡Error! No se pudo reservar PSRAM");
+    }
+    else
+    {
+        memset(canvas->data, 0, canvas->aligned_size);
+        // Sincronizamos la limpieza inicial
+        Cache_WriteBack_Addr((uint32_t)canvas->data, (uint32_t)canvas->aligned_size);
+    }
 }
 bool lcd_crtl_draw_sprite(canvas_t* canvas, sprite_t* sprite, uint16_t x0, uint16_t y0)
 {
@@ -164,11 +175,11 @@ bool lcd_crtl_draw_sprite(canvas_t* canvas, sprite_t* sprite, uint16_t x0, uint1
 
 void lcd_crtl_canvas_clean(canvas_t* canvas, uint16_t color)
 {
-    for(uint16_t y = 0; y < canvas->height; y++)
+    for(uint32_t y = 0; y < canvas->height; y++)
         {
-            for (uint16_t x = 0; x < canvas->width; x++)
+            for (uint32_t x = 0; x < canvas->width; x++)
             {
-                uint16_t canvas_idx = y * canvas->width + x;
+                uint32_t canvas_idx = y * canvas->width + x;
                 canvas->data[canvas_idx] = color;
             }
         }
@@ -176,8 +187,9 @@ void lcd_crtl_canvas_clean(canvas_t* canvas, uint16_t color)
 
 void lcd_crtl_canvas_send(canvas_t* canvas)
 {
+    Cache_WriteBack_Addr((uint32_t)canvas->data, canvas->aligned_size);
     xSemaphoreTake(dma_sem, portMAX_DELAY);
-    esp_lcd_panel_draw_bitmap(panel_handle,0,0,canvas->width,canvas->height,canvas->data);
+    esp_lcd_panel_draw_bitmap(panel_handle, 0, 0, canvas->width, canvas->height, canvas->data);
 }
 
 
