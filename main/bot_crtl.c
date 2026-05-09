@@ -48,6 +48,7 @@ static const sprite_t boca           = {boca_map, 20, 70};
 static const sprite_t ojo_normal     = {ojonormal_map, 20, 20};
 static const sprite_t ojoder         = {ojoder_map, 20, 20};
 static const sprite_t ojoizq         = {ojoizq_map, 20, 20};
+static const sprite_t ojo_cruz         = {ojo_cruz_map, 20, 20};
 static const sprite_t antena_base    = {ant_frame1_map, 40, 70};
 static const sprite_t brazo_izq_base = {brazo_izq_frame1_map, 60, 80};
 static const sprite_t brazo_der_base = {brazo_der_frame1_map, 60, 80};
