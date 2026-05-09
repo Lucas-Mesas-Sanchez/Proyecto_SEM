@@ -43,6 +43,35 @@ static canvas_t bot_canvas;
     converter.py [foto.extension] <tipo de cuadro (estirado recortado y no se que mas)> <ancho> <alto> o algo así. está en el codigo tmb.
 
 */
+static const sprite_t base           = {base_map, 320, 240};
+static const sprite_t boca           = {boca_map, 20, 70};
+static const sprite_t ojo_normal     = {ojonormal_map, 20, 20};
+static const sprite_t ojoder         = {ojoder_map, 20, 20};
+static const sprite_t ojoizq         = {ojoizq_map, 20, 20};
+static const sprite_t antena_base    = {ant_frame1_map, 40, 70};
+static const sprite_t brazo_izq_base = {brazo_izq_frame1_map, 60, 80};
+static const sprite_t brazo_der_base = {brazo_der_frame1_map, 60, 80};
+
+static const sprite_t animacion_antena[] = {
+    {ant_frame1_map, 40, 70},
+    {ant_frame2_map, 40, 70},
+    {ant_frame3_map, 40, 70},
+    {ant_frame4_map, 40, 70},
+    {ant_frame5_map, 40, 70},
+    {ant_frame6_map, 40, 70},
+    {ant_frame7_map, 40, 70},
+};
+
+static const sprite_t animacion_brazo_izq[] = {
+    {brazo_izq_frame1_map, 60, 80},
+    {brazo_izq_frame2_map, 60, 80}
+};
+
+
+static const sprite_t animacion_brazo_izq[] = {
+    {brazo_der_frame1_map, 60, 80},
+    {brazo_der_frame2_map, 60, 80}
+};
 /* Private function prototypes -----------------------------------------------*/
 static const sprite_t* next_srpite(const sprite_t* animation,uint8_t* actual,uint8_t size);
 static void write_phrase(const char* phrase,uint16_t write_speed);
