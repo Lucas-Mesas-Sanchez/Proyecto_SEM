@@ -43,15 +43,27 @@ static canvas_t bot_canvas;
     converter.py [foto.extension] <tipo de cuadro (estirado recortado y no se que mas)> <ancho> <alto> o algo así. está en el codigo tmb.
 
 */
+
+static unsigned int bizq_idx = 0;
+static unsigned int bder_idx = 0;
+static unsigned int antn_idx = 0;
 static const sprite_t base           = {base_map, 320, 240};
 static const sprite_t boca           = {boca_map, 20, 70};
 static const sprite_t ojo_normal     = {ojonormal_map, 20, 20};
 static const sprite_t ojoder         = {ojoder_map, 20, 20};
 static const sprite_t ojoizq         = {ojoizq_map, 20, 20};
-static const sprite_t ojo_cruz         = {ojo_cruz_map, 20, 20};
+static const sprite_t ojo_cruz       = {ojo_cruz_map, 20, 20};
 static const sprite_t antena_base    = {ant_frame1_map, 40, 70};
 static const sprite_t brazo_izq_base = {brazo_izq_frame1_map, 60, 80};
 static const sprite_t brazo_der_base = {brazo_der_frame1_map, 60, 80};
+
+static const sprite_t animacion_blink[] = {
+    {ojonormal_map, 20, 20},
+    {blink_frame1_map, 20, 20},
+    {blink_frame2_map, 20, 20},
+    {blink_frame3_map, 20, 20},
+    {blink_frame4_map, 20, 20}
+};
 
 static const sprite_t animacion_antena[] = {
     {ant_frame1_map, 40, 70},
