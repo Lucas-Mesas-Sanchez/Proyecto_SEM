@@ -31,9 +31,7 @@
 
 #define PROBABILITY_CONTROLL 1000
 static const char *TAG = "BOT_HAPPY";
-TaskHandle_t display_controller_handle = NULL;
 TaskHandle_t state_controller_hande = NULL;
-static void display_controller(void* param);
 static void state_controller(void* param);
 
 void app_main(void)
@@ -58,37 +56,36 @@ static void state_controller(void* param)
        
             uint16_t animation_probability = (rand() % PROBABILITY_CONTROLL);
             if(animation_probability >= 0 && animation_probability < 250){
-                bot_idle_animation();
                 ESP_LOGI(TAG, "Bot on Idle");
+                bot_idle_animation();
+                
             }
             else if(animation_probability >= 250 && animation_probability < 375){
-                bot_blink_animation();
                 ESP_LOGI(TAG, "Bot blinking\n");
-
+                bot_blink_animation();
+               
             }
             else if(animation_probability >= 375 && animation_probability < 500){
-                bot_side_watch_animation();
                 ESP_LOGI(TAG, "Bot spying(side watch)\n");
-
+                bot_side_watch_animation();
             }
             else if(animation_probability >= 500 && animation_probability < 625){
-                bot_talking_animation();
                 ESP_LOGI(TAG, "Bot talking\n");
-
+                bot_talking_animation();
             }
             else if(animation_probability >= 625 && animation_probability < 750){
-                bot_moving_anthena_animation();
                 ESP_LOGI(TAG, "Bot moving antena side to side");
-
+                bot_moving_anthena_animation();
             }
             else if(animation_probability >= 750 && animation_probability < 875){
-                bot_happy_animation();
                 ESP_LOGI(TAG, "bot is HAPPY");
+                bot_happy_animation();  
             }
             else{
-                bot_dead_eyes_animation();
                 ESP_LOGI(TAG, "Bot is committed Poli[suicide]");
+                bot_dead_eyes_animation();
             }
+            vTaskDelay(pdMS_TO_TICKS(2000));
         }
     }
 

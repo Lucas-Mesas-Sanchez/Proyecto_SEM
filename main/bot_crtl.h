@@ -27,14 +27,37 @@
 /* Exported functions --------------------------------------------------------*/
 /******************************************************************************/
 /**
-    @brief  Init Function of the display
+    @brief  Init Function of the bot
 */
 void bot_init(void);
-void bot_idle_animation();
-void bot_blink_animation();
-void bot_side_watch_animation();
-void bot_talking_animation();
-void bot_moving_anthena_animation();
+/**
+    @brief  Activates the idle animation of the bot. NOT CONCURRENT
+*/
+void bot_idle_animation(void);
+/**
+    @brief   Activates the blink animation of the bot. NOT CONCURRENT
+*/
+void bot_blink_animation(void);
+/**
+    @brief  Activates the watch side to side animation of the bot. NOT CONCURRENT
+*/
+void bot_side_watch_animation(void);
+/**
+    @brief  Activates the talk animation of the bot. NOT CONCURRENT
+*/
+void bot_talking_animation(void);
+/**
+    @brief  Activates moving the anthena side to side animation of the bot. NOT CONCURRENT
+*/
+void bot_moving_anthena_animation(void);
+/**
+    @brief  Activates the happy animation of the bot. NOT CONCURRENT
+*/
+void bot_happy_animation(void);
+/**
+    @brief  Activates the dead animation of the bot. NOT CONCURRENT
+*/
+void bot_dead_eyes_animation(void);
 #ifdef __cplusplus
 }
 #endif

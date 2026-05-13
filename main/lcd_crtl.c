@@ -59,8 +59,8 @@
 
 //MACROS LCD 16x2
 #define LCD_ADDR 0x27
-#define SDA_PIN GPIO_NUM_21
-#define SCL_PIN GPIO_NUM_20
+#define SDA_PIN GPIO_NUM_1
+#define SCL_PIN GPIO_NUM_2
 /* Private variables ---------------------------------------------------------*/
 static esp_lcd_panel_io_handle_t io_handle = NULL;
 static esp_lcd_panel_handle_t panel_handle = NULL;
@@ -125,7 +125,6 @@ void lcd_crtl_display_init(void)
     esp_lcd_panel_set_gap(panel_handle, 0, 0);
     ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(panel_handle, true));
     vTaskDelay(pdMS_TO_TICKS(50));
-
     ESP_LOGI(__FILE__, "Panel iniciado correctamente");
 }
 
@@ -151,18 +150,18 @@ void lcd_crtl_canvas_init(canvas_t* canvas, uint16_t* cdata,uint16_t w,uint16_t 
 bool lcd_crtl_draw_sprite(canvas_t* canvas, sprite_t* sprite, uint16_t x0, uint16_t y0)
 {
     bool err = true;
-    if (((sprite->width + x0) > canvas->width ) || ((sprite->height + y0) > canvas->height))
-    {
-        err = false;
-    }
+    //if (((sprite->width + x0) > canvas->width ) || ((sprite->height + y0) > canvas->height))
+   // {
+     //   err = false;
+    //}
     if (err)
     {
         for(uint16_t y = 0; y < sprite->height; y++)
         {
             for (uint16_t x = 0; x < sprite->width; x++)
             {
-                uint16_t canvas_idx = (y0 + y) * canvas->width + (x0 + x);
-                uint16_t sprite_idx = y * sprite->width + x;
+                uint32_t canvas_idx = (y0 + y) * canvas->width + (x0 + x);
+                uint32_t sprite_idx = y * sprite->width + x;
                 if (sprite->data[sprite_idx] != LCD_CRTL_TRANSPARENT_COLOR) //Color auxiliar que permite hacer formas no cuadradas. En este caso magenta
                 {
                     canvas->data[canvas_idx] = sprite->data[sprite_idx];

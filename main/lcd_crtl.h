@@ -27,8 +27,8 @@
 typedef struct 
 {
     const uint16_t *data;
-    uint16_t height;
     uint16_t width;
+    uint16_t height;
 }sprite_t;
 
 typedef struct 
@@ -70,7 +70,7 @@ void lcd_crtl_canvas_init(canvas_t* canvas, uint16_t* cdata,uint16_t w,uint16_t 
     @param y0 Coordinate y of the canvas where the sprite is gonna be drawn
     @retval True if the sprite fits in the canvas and False if not
 */
-bool lcd_crtl_draw_sprite(canvas_t* canvas, sprite_t* sprite, uint16_t x0, uint16_t y0);
+bool lcd_crtl_draw_sprite(canvas_t* canvas,sprite_t* sprite, uint16_t x0, uint16_t y0);
 
 /******************************************************************************/
 /******************************************************************************/
