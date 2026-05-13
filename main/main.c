@@ -75,7 +75,7 @@ static void state_controller(void* param)
             }
             else if(animation_probability >= 625 && animation_probability < 750){
                 ESP_LOGI(TAG, "Bot moving antena side to side");
-                bot_moving_anthena_animation();
+                antenna_animation();
             }
             else if(animation_probability >= 750 && animation_probability < 875){
                 ESP_LOGI(TAG, "bot is HAPPY");

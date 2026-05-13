@@ -41,8 +41,6 @@ static const char* phrases_table[] =
     "Rebollo Dimision",
     "Poli[traumaT]",
     "Me mueeerooooooo"
-
-
 };
 static canvas_t bot_canvas;
 
@@ -54,11 +52,11 @@ static sprite_t base           = {base_map, 240, 320};
 static sprite_t boca           = {boca_map, 70, 20};
 static sprite_t ojonormal     = {ojonormal_map, 20, 20};
 
-/*
+
 static const sprite_t ojoder         = {ojoder_map, 20, 20};
 static const sprite_t ojoizq         = {ojoizq_map, 20, 20};
-static const sprite_t ojo_cruz       = {ojo_cruz_map, 20, 20};
-*/
+//static const sprite_t ojo_cruz       = {ojo_cruz_map, 20, 20};
+
 
 static sprite_t antena_base    = {ant_frame1_map, 70, 40};
 static sprite_t brazo_izq_base = {brazo_izq_frame1_map, 80, 60};
@@ -72,17 +70,17 @@ static const sprite_t animacion_blink[] = {
     {blink_frame3_map, 20, 20},
     {blink_frame4_map, 20, 20}
 };
-
+*/
 static const sprite_t animacion_antena[] = {
-    {ant_frame1_map, 40, 70},
-    {ant_frame2_map, 40, 70},
-    {ant_frame3_map, 40, 70},
-    {ant_frame4_map, 40, 70},
-    {ant_frame5_map, 40, 70},
-    {ant_frame6_map, 40, 70},
-    {ant_frame7_map, 40, 70},
+    {ant_frame1_map, 70, 40},
+    {ant_frame2_map, 70, 40},
+    {ant_frame3_map, 70, 40},
+    {ant_frame4_map, 70, 40},
+    {ant_frame5_map, 70, 40},
+    {ant_frame6_map, 70, 40},
+    {ant_frame7_map, 70, 40},
 };
-
+/*
 static const sprite_t animacion_brazo_izq[] = {
     {brazo_izq_frame1_map, 60, 80},
     {brazo_izq_frame2_map, 60, 80}
@@ -150,11 +148,70 @@ void bot_idle_animation()
 }
 void bot_blink_animation()
 {
+   lcd_crtl_draw_sprite(&bot_canvas, &base, 0, 0);
    
+    lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_IX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_DX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_izq_base, BRAZO_IX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &antena_base, ANT_X, ANT_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_der_base, BRAZO_DX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &boca, BOCA_X, BOCA_Y);
+    lcd_crtl_canvas_send(&bot_canvas);
 }
 void bot_side_watch_animation()
 {
+    lcd_crtl_draw_sprite(&bot_canvas, &base, 0, 0);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_IX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_DX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_izq_base, BRAZO_IX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &antena_base, ANT_X, ANT_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_der_base, BRAZO_DX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &boca, BOCA_X, BOCA_Y);
+    lcd_crtl_canvas_send(&bot_canvas);
 
+    vTaskDelay(pdMS_TO_TICKS(750));
+
+    lcd_crtl_draw_sprite(&bot_canvas, &base, 0, 0);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojoizq, OJO_IX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojoizq, OJO_DX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_izq_base, BRAZO_IX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &antena_base, ANT_X, ANT_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_der_base, BRAZO_DX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &boca, BOCA_X, BOCA_Y);
+    lcd_crtl_canvas_send(&bot_canvas);
+        
+    vTaskDelay(pdMS_TO_TICKS(750));
+    
+    lcd_crtl_draw_sprite(&bot_canvas, &base, 0, 0);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_IX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_DX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_izq_base, BRAZO_IX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &antena_base, ANT_X, ANT_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_der_base, BRAZO_DX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &boca, BOCA_X, BOCA_Y);
+    lcd_crtl_canvas_send(&bot_canvas);
+
+    vTaskDelay(pdMS_TO_TICKS(750));
+    
+    lcd_crtl_draw_sprite(&bot_canvas, &base, 0, 0);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojoder, OJO_IX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojoder, OJO_DX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_izq_base, BRAZO_IX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &antena_base, ANT_X, ANT_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_der_base, BRAZO_DX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &boca, BOCA_X, BOCA_Y);
+    lcd_crtl_canvas_send(&bot_canvas);
+
+    vTaskDelay(pdMS_TO_TICKS(750));
+    
+    lcd_crtl_draw_sprite(&bot_canvas, &base, 0, 0);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_IX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_DX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_izq_base, BRAZO_IX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &antena_base, ANT_X, ANT_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_der_base, BRAZO_DX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &boca, BOCA_X, BOCA_Y);
+    lcd_crtl_canvas_send(&bot_canvas);
 }
 void bot_talking_animation()
 {
@@ -173,9 +230,50 @@ void bot_talking_animation()
         vTaskDelay(pdMS_TO_TICKS(500));
         LCD_clearScreen();  
 }
+
+void antenna_animation ()
+{
+    for(uint8_t i = 0; i < 7; i++)
+    {
+        lcd_crtl_draw_sprite(&bot_canvas, &base, 0, 0);
+        lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_IX, OJO_Y);
+        lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_DX, OJO_Y);
+        lcd_crtl_draw_sprite(&bot_canvas, &brazo_izq_base, BRAZO_IX, BRAZO_Y);
+        lcd_crtl_draw_sprite(&bot_canvas, &animacion_antena[i], ANT_X, ANT_Y);
+        lcd_crtl_draw_sprite(&bot_canvas, &brazo_der_base, BRAZO_DX, BRAZO_Y);
+        lcd_crtl_draw_sprite(&bot_canvas, &boca, BOCA_X, BOCA_Y);
+        lcd_crtl_canvas_send(&bot_canvas);
+
+        vTaskDelay(pdMS_TO_TICKS(75));
+    }
+    
+    for(uint8_t i = 6; i > 0; i--)
+    {
+        lcd_crtl_draw_sprite(&bot_canvas, &base, 0, 0);
+        lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_IX, OJO_Y);
+        lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_DX, OJO_Y);
+        lcd_crtl_draw_sprite(&bot_canvas, &brazo_izq_base, BRAZO_IX, BRAZO_Y);
+        lcd_crtl_draw_sprite(&bot_canvas, &animacion_antena[i], ANT_X, ANT_Y);
+        lcd_crtl_draw_sprite(&bot_canvas, &brazo_der_base, BRAZO_DX, BRAZO_Y);
+        lcd_crtl_draw_sprite(&bot_canvas, &boca, BOCA_X, BOCA_Y);
+        lcd_crtl_canvas_send(&bot_canvas);
+
+        vTaskDelay(pdMS_TO_TICKS(75));
+    }
+    lcd_crtl_draw_sprite(&bot_canvas, &base, 0, 0);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_IX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_DX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_izq_base, BRAZO_IX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &antena_base, ANT_X, ANT_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_der_base, BRAZO_DX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &boca, BOCA_X, BOCA_Y);
+    lcd_crtl_canvas_send(&bot_canvas);
+    
+
+}
 void bot_moving_anthena_animation()
 {
-
+    
 }
 
 void bot_happy_animation()
@@ -201,4 +299,3 @@ static void write_phrase(const char* phrase,uint16_t write_speed)
        vTaskDelay(pdMS_TO_TICKS(write_speed));
     }
 }
-
