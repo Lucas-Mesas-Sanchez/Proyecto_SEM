@@ -1,0 +1,3 @@
+dependencies:
+ esp_lcd_ili9341: "^2.0.2"
+ panigrah/esp32-idf-hd44780: "^0.0.3"
