@@ -16,7 +16,17 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define NUM_PHRASES 9
-
+#define PIXEL_TAM   5
+#define OJO_Y       114         
+#define OJO_IX      91
+#define OJO_DX      131
+#define BOCA_X      86
+#define BOCA_Y      144
+#define BRAZO_Y     169
+#define BRAZO_IX    1
+#define BRAZO_DX    171
+#define ANT_X       86
+#define ANT_Y       34
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 
@@ -96,7 +106,33 @@ void bot_init(void)
 }
 void bot_idle_animation()
 {
+    lcd_crtl_draw_sprite(&bot_canvas, &base, 0, 0);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_IX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_DX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_izq_base, BRAZO_IX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_der_base, BRAZO_DX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &boca, BOCA_X, BOCA_Y);
+    lcd_canvas_send(&bot_canvas);
+
+    vTaskDelay(pdMS_TO_TICKS(500));
     
+    lcd_crtl_draw_sprite(&bot_canvas, &base, 0, 0);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_IX, (OJO_Y + PIXEL_TAM));
+    lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_DX, (OJO_Y + PIXEL_TAM));
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_izq_base, BRAZO_IX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_der_base, BRAZO_DX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &boca, BOCA_X, (BOCA_Y + PIXEL_TAM));
+    lcd_canvas_send(&bot_canvas);
+
+    vTaskDelay(pdMS_TO_TICKS(500));
+
+    lcd_crtl_draw_sprite(&bot_canvas, &base, 0, 0);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_IX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_DX, OJO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_izq_base, BRAZO_IX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &brazo_der_base, BRAZO_DX, BRAZO_Y);
+    lcd_crtl_draw_sprite(&bot_canvas, &boca, BOCA_X, BOCA_Y);
+    lcd_canvas_send(&bot_canvas);
 }
 void bot_blink_animation()
 {
