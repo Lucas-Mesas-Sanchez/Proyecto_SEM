@@ -49,7 +49,7 @@ void bot_talking_animation(void);
 /**
     @brief  Activates moving the anthena side to side animation of the bot. NOT CONCURRENT
 */
-void bot_moving_anthena_animation(void);
+void antenna_animation(void);
 /**
     @brief  Activates the happy animation of the bot. NOT CONCURRENT
 */
