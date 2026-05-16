@@ -1,27 +1,13 @@
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <stdint.h>
-#include <time.h>
 #include "esp_system.h"
 #include "esp_mac.h"
 
-#include "esp_lcd_ili9341.h"
-
-#include "esp_lcd_panel_commands.h"
-#include "esp_lcd_panel_dev.h"
-#include "esp_lcd_panel_interface.h"
-#include "esp_lcd_panel_io.h"
-#include "esp_lcd_panel_ops.h"
-#include "esp_lcd_panel_vendor.h"
-
-#include <sys/lock.h>
-#include <sys/param.h>
 #include "esp_timer.h"
 #include "esp_log.h"
 
-#include "driver/gpio.h"
 #include "esp_vfs_dev.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -41,7 +27,7 @@ void app_main(void)
     lcd_crtl_display_init();
     vTaskDelay(pdMS_TO_TICKS(500));
     bot_init();
-    xTaskCreatePinnedToCore(state_controller,"State_Controller",4098,NULL,2,&state_controller_hande,0);
+    xTaskCreatePinnedToCore(state_controller,"State_Controller",8192,NULL,2,&state_controller_hande,0);
 
 }
 
@@ -55,7 +41,7 @@ static void state_controller(void* param)
     for(;;){
        
             uint16_t animation_probability = (rand() % PROBABILITY_CONTROLL);
-            if(animation_probability >= 0 && animation_probability < 250){
+            if(animation_probability < 250){
                 ESP_LOGI(TAG, "Bot on Idle");
                 bot_idle_animation();
                 

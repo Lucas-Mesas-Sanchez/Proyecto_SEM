@@ -93,7 +93,6 @@ static const sprite_t animacion_brazo_der[] = {
 };
 */
 /* Private function prototypes -----------------------------------------------*/
-static const sprite_t* next_srpite(const sprite_t* animation,uint8_t* actual,uint8_t size);
 static void write_phrase(const char* phrase,uint16_t write_speed);
 /* Exported functions --------------------------------------------------------*/
 void bot_init(void)
@@ -111,7 +110,7 @@ void bot_init(void)
     lcd_crtl_canvas_send(&bot_canvas);
     
 }
-void bot_idle_animation()
+void bot_idle_animation(void)
 {
     lcd_crtl_draw_sprite(&bot_canvas, &base, 0, 0);
    
@@ -146,7 +145,7 @@ void bot_idle_animation()
     
     lcd_crtl_canvas_send(&bot_canvas);
 }
-void bot_blink_animation()
+void bot_blink_animation(void)
 {
    lcd_crtl_draw_sprite(&bot_canvas, &base, 0, 0);
    
@@ -158,7 +157,7 @@ void bot_blink_animation()
     lcd_crtl_draw_sprite(&bot_canvas, &boca, BOCA_X, BOCA_Y);
     lcd_crtl_canvas_send(&bot_canvas);
 }
-void bot_side_watch_animation()
+void bot_side_watch_animation(void)
 {
     lcd_crtl_draw_sprite(&bot_canvas, &base, 0, 0);
     lcd_crtl_draw_sprite(&bot_canvas, &ojonormal, OJO_IX, OJO_Y);
@@ -213,7 +212,7 @@ void bot_side_watch_animation()
     lcd_crtl_draw_sprite(&bot_canvas, &boca, BOCA_X, BOCA_Y);
     lcd_crtl_canvas_send(&bot_canvas);
 }
-void bot_talking_animation()
+void bot_talking_animation(void)
 {
         uint8_t phrase_select = (rand() % NUM_PHRASES);
         const char* phrase = phrases_table[phrase_select];
@@ -231,7 +230,7 @@ void bot_talking_animation()
         LCD_clearScreen();  
 }
 
-void antenna_animation ()
+void antenna_animation (void)
 {
     for(uint8_t i = 0; i < 7; i++)
     {
@@ -271,25 +270,21 @@ void antenna_animation ()
     
 
 }
-void bot_moving_anthena_animation()
+void bot_moving_anthena_animation(void)
 {
     
 }
 
-void bot_happy_animation()
+void bot_happy_animation(void)
 {
 
 }
-void bot_dead_eyes_animation()
+void bot_dead_eyes_animation(void)
 {
 
 }
 /* Private functions ---------------------------------------------------------*/
-static const sprite_t* next_srpite(const sprite_t* animation,uint8_t* actual,uint8_t size)
-{
-    *actual = (*actual +1) % size;
-    return &animation[*actual];
-}
+
 static void write_phrase(const char* phrase,uint16_t write_speed)
 {
     for (uint8_t phrase_ch = 0 ; phrase_ch < strlen(phrase); phrase_ch++ )
