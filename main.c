@@ -28,6 +28,7 @@
 
 #include "lcd_crtl.h"
 #include "bot_crtl.h"
+#include "wifi.h"
 
 #define PROBABILITY_CONTROLL 1000
 static const char *TAG = "BOT_HAPPY";
@@ -37,12 +38,21 @@ static void state_controller(void* param);
 void app_main(void)
 {
     srand(time(NULL));
-    
+    wifi_init();     
+    ESP_LOGI(__FILE__,"WiFi is being initialized.");  
     lcd_crtl_display_init();
     vTaskDelay(pdMS_TO_TICKS(500));
     bot_init();
     xTaskCreatePinnedToCore(state_controller,"State_Controller",4098,NULL,2,&state_controller_hande,0);
-
+    
+    for (;;){         
+        vTaskDelay(500/portTICK_PERIOD_MS);
+        if (wifi_is_connected()){             
+            ESP_LOGI(__FILE__,"I'm CONNECTED!!!");
+        }else{ 
+            ESP_LOGI(__FILE__,"I'm disconnected :-(");
+        }    
+    } 
 }
 
 static void state_controller(void* param)
