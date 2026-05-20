@@ -16,6 +16,7 @@
 #include "lcd_crtl.h"
 #include "bot_crtl.h"
 #include "Wifi.h"
+#include "Wifi_credentials.h"
 #define PROBABILITY_CONTROLL 875
 static const char *TAG = "BOT_HAPPY";
 TaskHandle_t state_controller_hande = NULL;

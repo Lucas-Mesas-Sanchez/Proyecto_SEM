@@ -6,8 +6,8 @@
 #ifndef WIFI_CREDENTIALS_H
 #define WIFI_CREDENTIALS_H
 
-#define WIFI_SSID "UPV-PSK"
-#define WIFI_PASS "giirob-pr2-2023"
+#define WIFI_SSID "iPhone"
+#define WIFI_PASS "12345678"
 
 #endif
 /*** End of file ***/
