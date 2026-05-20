@@ -28,6 +28,7 @@
 #include "esp_lcd_panel_ops.h"
 #include "esp_lcd_panel_vendor.h"
 #include "driver/gpio.h"
+
 #include "esp_vfs_dev.h"
 #include "esp_log.h"
 #include "esp_rom_sys.h"
@@ -50,7 +51,7 @@
 #define LED_PIN  GPIO_NUM_3   // Movido del 38/1 para evitar conflictos
 #define MISO_PIN GPIO_NUM_16  // (O -1 si no lo usas)
 
-#define LCD_PIXEL_CLOCK_HZ 20*1000*1000 //
+#define LCD_PIXEL_CLOCK_HZ 10*1000*1000 //
 #define LCD_CMD_BITS 8
 #define LCD_PARAM_BITS 8
 
@@ -59,8 +60,8 @@
 
 //MACROS LCD 16x2
 #define LCD_ADDR 0x27
-#define SDA_PIN GPIO_NUM_1
-#define SCL_PIN GPIO_NUM_2
+#define SDA_PIN GPIO_NUM_5
+#define SCL_PIN GPIO_NUM_4
 /* Private variables ---------------------------------------------------------*/
 static esp_lcd_panel_io_handle_t io_handle = NULL;
 static esp_lcd_panel_handle_t panel_handle = NULL;
@@ -72,8 +73,9 @@ extern void Cache_WriteBack_Addr(uint32_t addr, uint32_t size);
 void lcd_crtl_display_init(void)
 {
     /* INICIALIZACION DE PANTALLA LCD 16x2 */
-
+    vTaskDelay(pdMS_TO_TICKS(1000));
     LCD_init(LCD_ADDR,SDA_PIN,SCL_PIN,16,2);
+    vTaskDelay(pdMS_TO_TICKS(500));
     LCD_clearScreen();
     /* INICIALIZACION DE PANTALLA LCD RBG */
     dma_sem = xSemaphoreCreateBinary();
@@ -106,7 +108,7 @@ void lcd_crtl_display_init(void)
     };
     // Attach the LCD to the SPI bus
     ESP_ERROR_CHECK(esp_lcd_new_panel_io_spi((esp_lcd_spi_bus_handle_t)LCD_HOST, &io_config, &io_handle));
-     const esp_lcd_panel_io_callbacks_t cbs = { // Activamos una funció de callback para poder usar DMA
+     const esp_lcd_panel_io_callbacks_t cbs = {
         .on_color_trans_done = notify_transfer_done,
     };
     ESP_ERROR_CHECK(esp_lcd_panel_io_register_event_callbacks(io_handle, &cbs, dma_sem));
@@ -150,10 +152,10 @@ void lcd_crtl_canvas_init(canvas_t* canvas, uint16_t* cdata,uint16_t w,uint16_t 
 bool lcd_crtl_draw_sprite(canvas_t* canvas, sprite_t* sprite, uint16_t x0, uint16_t y0)
 {
     bool err = true;
-    //if (((sprite->width + x0) > canvas->width ) || ((sprite->height + y0) > canvas->height))
-   // {
-     //   err = false;
-    //}
+    if (((sprite->width + x0) > canvas->width ) || ((sprite->height + y0) > canvas->height))
+    {
+      err = false;
+    }
     if (err)
     {
         for(uint16_t y = 0; y < sprite->height; y++)
@@ -189,6 +191,7 @@ void lcd_crtl_canvas_send(canvas_t* canvas)
     Cache_WriteBack_Addr((uint32_t)canvas->data, canvas->aligned_size);
     xSemaphoreTake(dma_sem, portMAX_DELAY);
     esp_lcd_panel_draw_bitmap(panel_handle, 0, 0, canvas->width, canvas->height, canvas->data);
+    vTaskDelay(pdMS_TO_TICKS(10));
 }
 
 
