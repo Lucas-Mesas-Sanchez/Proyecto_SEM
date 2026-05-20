@@ -4,7 +4,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
 
-// The animation commands the web server can request
+// Las animaciones que el servidor web puede solicitar
 typedef enum {
     ANIM_IDLE,
     ANIM_BLINK,
@@ -15,7 +15,7 @@ typedef enum {
     ANIM_DEAD
 } animation_cmd_t;
 
-// Call this after WiFi connects. Pass the queue that state_controller reads from.
+// Llama a esto después de conectar el WiFi
 void http_server_start(QueueHandle_t anim_queue);
 
-#endif
+#endif // HTTP_SERVER_H

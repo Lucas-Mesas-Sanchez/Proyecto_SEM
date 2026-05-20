@@ -33,7 +33,21 @@ static const char *HTML_PAGE =
 // Every handler function reads from this variable
 static QueueHandle_t s_anim_queue;
 
+// Al final de tu archivo http_server.c:
+void http_server_start(QueueHandle_t anim_queue) 
+{
+    // Guardamos la cola global del bot en nuestra variable estática local
+    s_anim_queue = anim_queue;
 
+    ESP_LOGI(TAG, "Iniciando el servidor HTTP...");
+
+    httpd_handle_t server = NULL;
+    httpd_config_t config = HTTPD_DEFAULT_CONFIG();
+    config.lru_purge_enable = true;
+
+    // Aquí iría el código para registrar tus handlers de URIs (/idle, /blink, etc.)
+    // y finalmente arrancar el servidor:
+    // if (httpd_start(&server, &config) == ESP_OK) { ... }
+}
 
 void http_server_start(QueueHandle_t anim_queue);
-

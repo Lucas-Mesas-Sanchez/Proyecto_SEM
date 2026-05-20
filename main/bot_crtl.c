@@ -9,6 +9,7 @@
 #include "HD44780.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "esp_random.h"
 #include "bot_crtl.h"
 #include "lcd_crtl.h"
 #include "bot_sprites.h"
@@ -264,7 +265,7 @@ void bot_side_watch_animation()
 }
 void bot_talking_animation()
 {
-        uint8_t phrase_select = (rand() % NUM_PHRASES);
+        uint8_t phrase_select = (esp_random() % NUM_PHRASES);
         const char* phrase = phrases_table[phrase_select];
         LCD_clearScreen();
         LCD_setCursor(0,0);
@@ -272,7 +273,7 @@ void bot_talking_animation()
         if (phrase_select == 2) // Caso especial donde una frase se repite. Como no ocurre más veces no merece la pena hacer un enum
         {
             LCD_setCursor(0,1);
-            write_phrase(phrase,250);
+            write_phrase(phrase,75);
             
         }
         if(phrase_select == 8)

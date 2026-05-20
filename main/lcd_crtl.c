@@ -49,7 +49,6 @@
 #define MOSI_PIN GPIO_NUM_17
 #define SCLK_PIN GPIO_NUM_18
 #define LED_PIN  GPIO_NUM_8   // Movido del 38/1 para evitar conflictos
-#define MISO_PIN GPIO_NUM_16  // (O -1 si no lo usas)
 
 #define LCD_PIXEL_CLOCK_HZ 10*1000*1000 //
 #define LCD_CMD_BITS 8
@@ -89,7 +88,7 @@ void lcd_crtl_display_init(void)
         spi_bus_config_t buscfg = {
         .sclk_io_num = SCLK_PIN,
         .mosi_io_num = MOSI_PIN,
-        .miso_io_num = MISO_PIN,
+        .miso_io_num = -1,
         .quadwp_io_num = -1,
         .quadhd_io_num = -1,
         .max_transfer_sz = LCD_H_RES * LCD_V_RES * sizeof(uint16_t), 
