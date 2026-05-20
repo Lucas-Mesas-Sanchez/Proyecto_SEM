@@ -45,10 +45,10 @@
 
 #define CS_PIN   GPIO_NUM_7
 #define RST_PIN  GPIO_NUM_15
-#define DC_PIN   GPIO_NUM_8
+#define DC_PIN   GPIO_NUM_16
 #define MOSI_PIN GPIO_NUM_17
 #define SCLK_PIN GPIO_NUM_18
-#define LED_PIN  GPIO_NUM_3   // Movido del 38/1 para evitar conflictos
+#define LED_PIN  GPIO_NUM_8   // Movido del 38/1 para evitar conflictos
 #define MISO_PIN GPIO_NUM_16  // (O -1 si no lo usas)
 
 #define LCD_PIXEL_CLOCK_HZ 10*1000*1000 //
