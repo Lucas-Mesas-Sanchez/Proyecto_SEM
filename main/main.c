@@ -5,6 +5,7 @@
 #include "esp_system.h"
 #include "esp_mac.h"
 
+#include "esp_random.h"
 #include "esp_timer.h"
 #include "esp_log.h"
 
@@ -14,20 +15,30 @@
 
 #include "lcd_crtl.h"
 #include "bot_crtl.h"
-
-#define PROBABILITY_CONTROLL 1000
+#include "Wifi.h"
+#define PROBABILITY_CONTROLL 875
 static const char *TAG = "BOT_HAPPY";
 TaskHandle_t state_controller_hande = NULL;
 static void state_controller(void* param);
 
 void app_main(void)
 {
-    srand(time(NULL));
-    
     lcd_crtl_display_init();
     vTaskDelay(pdMS_TO_TICKS(500));
     bot_init();
     xTaskCreatePinnedToCore(state_controller,"State_Controller",8192,NULL,2,&state_controller_hande,0);
+    for(;;)
+    {
+        vTaskDelay(pdMS_TO_TICKS(500));
+        if (wifi_is_connected())
+        {
+            ESP_LOGI(__FILE__,"IM CONNECTED");
+        }
+        else
+        {
+            ESP_LOGI(__FILE__,"IM DISCONNECTED");
+        }
+    }
 
 }
 
@@ -40,7 +51,7 @@ static void state_controller(void* param)
 
     for(;;){
        
-            uint16_t animation_probability = (rand() % PROBABILITY_CONTROLL);
+            uint32_t animation_probability = (esp_random() % PROBABILITY_CONTROLL);
             if(animation_probability < 250){
                 ESP_LOGI(TAG, "Bot on Idle");
                 bot_idle_animation();
@@ -66,10 +77,6 @@ static void state_controller(void* param)
             else if(animation_probability >= 750 && animation_probability < 875){
                 ESP_LOGI(TAG, "bot is HAPPY");
                 bot_happy_animation();  
-            }
-            else{
-                ESP_LOGI(TAG, "Bot is committed Poli[suicide]");
-                bot_dead_eyes_animation();
             }
             vTaskDelay(pdMS_TO_TICKS(2000));
         }
