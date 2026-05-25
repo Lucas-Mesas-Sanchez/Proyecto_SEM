@@ -72,8 +72,11 @@ extern void Cache_WriteBack_Addr(uint32_t addr, uint32_t size);
 void lcd_crtl_display_init(void)
 {
     /* INICIALIZACION DE PANTALLA LCD 16x2 */
+
     vTaskDelay(pdMS_TO_TICKS(1000));
+
     LCD_init(LCD_ADDR,SDA_PIN,SCL_PIN,16,2);
+    
     vTaskDelay(pdMS_TO_TICKS(500));
     LCD_clearScreen();
     /* INICIALIZACION DE PANTALLA LCD RBG */

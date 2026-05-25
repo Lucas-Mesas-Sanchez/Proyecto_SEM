@@ -6,8 +6,8 @@
 #ifndef WIFI_CREDENTIALS_H
 #define WIFI_CREDENTIALS_H
 
-#define WIFI_SSID "Pptre"
-#define WIFI_PASS "12345678"
+#define WIFI_SSID "TTBOWIFI"
+#define WIFI_PASS "nomeacuerdo+10Z"
 
 #endif
 /*** End of file ***/

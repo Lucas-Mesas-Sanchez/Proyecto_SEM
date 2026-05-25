@@ -32,20 +32,15 @@ void app_main(void)
     lcd_crtl_display_init();
     vTaskDelay(pdMS_TO_TICKS(500));
     bot_init();
-    xTaskCreatePinnedToCore(state_controller,"State_Controller",8192,&anim_queue,2,&state_controller_hande,0);
-
+    
     ESP_LOGI(__FILE__, "Waiting for WiFi...");
     while (!wifi_is_connected()) {
         vTaskDelay(pdMS_TO_TICKS(500));
     }
     http_server_start(anim_queue);
     ESP_LOGI(__FILE__, "HTTP server is running. Open the IP address shown above in your browser.");
-
-    for (;;) 
-    {
-        vTaskDelay(pdMS_TO_TICKS(5000));
-    }
-
+    xTaskCreatePinnedToCore(state_controller,"State_Controller",8192,&anim_queue,2,&state_controller_hande,1);
+    
 }
 
 static void state_controller(void* param)
@@ -58,17 +53,48 @@ static void state_controller(void* param)
     for(;;)
     {
             animation_cmd_t cmd;
-            if (xQueueReceive(queue, &cmd, 0) == pdTRUE) 
+            if (xQueueReceive(queue, &cmd, pdMS_TO_TICKS(10)) == pdTRUE) 
             {
                 // A button was pressed on the web page — run the requested animation
                 switch (cmd) {
-                    case ANIM_IDLE:       bot_idle_animation();           break;
-                    case ANIM_BLINK:      bot_blink_animation();          break;
-                    case ANIM_SIDE_WATCH: bot_side_watch_animation();     break;
-                    case ANIM_TALKING:    bot_talking_animation();         break;
-                    case ANIM_ANTENNA:    antenna_animation();  break;
-                    case ANIM_HAPPY:      bot_happy_animation();          break;
-                    case ANIM_DEAD:       bot_dead_eyes_animation();      break;
+
+                    case ANIM_IDLE:       
+                        bot_idle_animation();
+                        ESP_LOGI(__FILE__,"ORDEN RECIBIDA - Idle Animation");         
+                    break;
+
+                    case ANIM_BLINK:      
+                        bot_blink_animation();
+                        ESP_LOGI(__FILE__,"ORDEN RECIBIDA - Blink Animation");        
+                    break;
+
+                    case ANIM_SIDE_WATCH: 
+                        bot_side_watch_animation();
+                        ESP_LOGI(__FILE__,"ORDEN RECIBIDA - Side Watch Animation");     
+                    break;
+
+                    case ANIM_TALKING:    
+                        bot_talking_animation();
+                        ESP_LOGI(__FILE__,"ORDEN RECIBIDA - Talking Animation");      
+                    break;
+
+                    case ANIM_ANTENNA:    
+                        antenna_animation();
+                        ESP_LOGI(__FILE__,"ORDEN RECIBIDA - Antenna Animation");  
+                    break;
+
+                    case ANIM_HAPPY:      
+                        bot_happy_animation();
+                        ESP_LOGI(__FILE__,"ORDEN RECIBIDA - Happy Animation");          
+                    break;
+
+                    case ANIM_DEAD:       
+                       bot_dead_eyes_animation();
+                       ESP_LOGI(__FILE__,"ORDEN RECIBIDA - Dead Animation");      
+                    break;
+
+                    default: 
+                        break;
                 }
             }
             else

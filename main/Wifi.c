@@ -21,8 +21,8 @@
 #include "lwip/err.h"
 #include "lwip/sys.h"
 
-#include "wifi.h"
-#include "wifi_credentials.h"
+#include "Wifi.h"
+#include "Wifi_credentials.h"
 
 /* The examples use WiFi configuration that you can set via project configuration menu
 
