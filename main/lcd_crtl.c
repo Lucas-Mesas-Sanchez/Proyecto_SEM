@@ -76,15 +76,12 @@ void lcd_crtl_display_init(void)
     vTaskDelay(pdMS_TO_TICKS(1000));
 
     LCD_init(LCD_ADDR,SDA_PIN,SCL_PIN,16,2);
-    
+
     vTaskDelay(pdMS_TO_TICKS(500));
     LCD_clearScreen();
     /* INICIALIZACION DE PANTALLA LCD RBG */
     dma_sem = xSemaphoreCreateBinary();
     xSemaphoreGive(dma_sem);
-    
-   
-
     
     gpio_set_direction(LED_PIN,GPIO_MODE_OUTPUT);
         gpio_set_level(LED_PIN,1);

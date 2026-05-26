@@ -107,7 +107,6 @@ static const sprite_t animacion_brazo_der[] = {
 };
 
 /* Private function prototypes -----------------------------------------------*/
-static const sprite_t* next_srpite(const sprite_t* animation,uint8_t* actual,uint8_t size);
 static void write_phrase(const char* phrase,uint16_t write_speed);
 /* Exported functions --------------------------------------------------------*/
 void bot_init(void)
@@ -276,7 +275,7 @@ void bot_talking_animation()
             write_phrase(phrase,75);
             
         }
-        if(phrase_select == 8)
+        if(phrase_select == 8) // Caso especial donde se ejecuta una animación tras decir la frase.
         {
             bot_dead_eyes_animation();
         }

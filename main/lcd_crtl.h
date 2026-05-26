@@ -24,13 +24,25 @@
 #include <stdint.h>
 
 /* Exported types ------------------------------------------------------------*/
+/**
+ @brief A sprite is a const data structure that storage an image with his size.
+ @param data const uint16_t*. It's the image of the sprite
+ @param width Widht of the sprite
+ @param height Height of the sprite
+ */
 typedef struct 
 {
     const uint16_t *data;
     uint16_t width;
     uint16_t height;
 }sprite_t;
-
+/**
+ @brief A cavnas is an array where you draw to send it to the screen
+ @param data uint16_t*. It's the image that it's gonna be displayed
+ @param height Height of the sprite
+ @param width Widht of the sprite
+ @param aligned_size Variable used to charge the image in PSRAM
+ */
 typedef struct 
 {
     uint16_t *data;
@@ -49,7 +61,7 @@ typedef struct
 /* Exported functions --------------------------------------------------------*/
 /******************************************************************************/
 /**
-    @brief  Init Function of the display
+    @brief  Init Function of the displays
 */
 void lcd_crtl_display_init(void);
 
