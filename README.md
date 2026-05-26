@@ -8,7 +8,7 @@ Este proyecto implementa un sistema embebido basado en el microcontrolador ESP32
 
 El repositorio está organizado en dos carpetas principales, manteniendo todo el código del firmware centralizado de manera lineal y un directorio independiente para las utilidades de conversión de recursos:
 
-### MIN/
+### MAIN/
 Esta carpeta concentra la totalidad del código fuente, controladores de hardware y configuraciones del firmware del sistema. Todos los archivos de código conviven directamente aquí sin subcarpetas internas:
 
 * **main.c**: Punto de entrada de la aplicación (`app_main`). Se encarga de inicializar el almacenamiento flash (NVS), la conectividad Wi-Fi, los controladores de los displays e iniciar el servidor HTTP. Lanza la tarea de FreeRTOS `state_controller` fijada en el Core 1, la cual gestiona la máquina de estados de las animaciones mediante colas (`QueueHandle_t`) o mediante un generador pseudoaleatorio en ausencia de peticiones externas.
